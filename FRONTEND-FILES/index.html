@@ -1,1 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agro Advisory System</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f0f4f8, #e0eafc);
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-title {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    header img {
+      height: 50px;
+      border-radius: 8px;
+    }
+
+    .logo-title h1 {
+      font-size: 20px;
+      color: #2E7D32;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #4CAF50;
+    }
+
+    section {
+      padding: 60px 40px;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .hero-text {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .hero-text h2 {
+      font-size: 44px;
+      color: #2E7D32;
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    .hero-text p {
+      font-size: 18px;
+      color: #555;
+      animation: fadeInUp 1.3s ease-in-out;
+    }
+
+    .hero-img {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .hero-img img {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .feature-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-box img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .feature-box h2 {
+      font-size: 22px;
+      color: #1B5E20;
+      margin-bottom: 10px;
+    }
+
+    .feature-box p {
+      color: #444;
+      line-height: 1.5;
+    }
+
+    footer {
+      background: #1B5E20;
+      color: white;
+      text-align: center;
+      padding: 30px 10px;
+      margin-top: 60px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+      }
+
+      .hero-text h2 {
+        font-size: 32px;
+      }
+
+      nav {
+        margin-top: 10px;
+      }
+    }
+
+    .designer-name {
+  background-color: #006400;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo-title">
+      <img src="assets/logo.jpg" alt="Logo" />
+      <h1>Agro Advisory System</h1>
+    </div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="crop.html">Crop Disease</a>
+      <a href="fertilizer.html">Fertilizer</a>
+      <a href="weather.html">Weather</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+  <div class="hero-text">
+    <h2>Empowering Agriculture with AI</h2>
+    <p>
+      A smart and intelligent platform to assist farmers with crop disease detection and fertilizer suggestions. 
+      Our goal is to empower agriculture using AI and expert systems for better decisions and productivity.
+    </p>
+  </div>
+  <div class="hero-img">
+    <video autoplay muted loop playsinline style="width:100%; border-radius:12px;">
+      <source src="assets/farm-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</section>
+
+
+  <section id="features">
+    <h2 style="text-align:center; margin-bottom: 40px; font-size: 32px; color: #2E7D32;">Key Features</h2>
+    <div class="features">
+      <div class="feature-box" onclick="location.href='crop.html'">
+        <img src="assets/cropdetect.jpg" alt="Crop Detection" />
+        <h2>Crop Disease Detection</h2>
+        <p>Upload images of infected crops and receive instant detection results with disease name and recommended treatments powered by our machine learning model.</p>
+      </div>
+      <div class="feature-box" onclick="location.href='fertilizer.html'">
+        <img src="assets/fert.jpg" alt="Fertilizer Recommendation" />
+        <h2>Fertilizer Recommendation</h2>
+        <p>Enter crop type and conditions to receive smart fertilizer suggestions that improve yield and maintain soil health.</p>
+      </div>
+      <div class="feature-box" onclick="location.href='weather.html'">
+        <img src="assets/weather.jpg" alt="Weather Advisory" />
+        <h2>Weather Advisory</h2>
+        <p>Access real-time and location-based weather information to make better farming decisions and reduce climate risks.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background-color: #2c3e50; color: #ecf0f1; padding: 2rem 0; text-align: center;">
+  <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+    &copy; 2025 <strong>Agro Advisory System</strong> | Designed by 
+    <a href="mohit-manthan.html" target="_blank" style="background-color: #1abc9c; color: white; padding: 0.6rem 1.4rem; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: background 0.3s;">
+      M&M Team
+    </a>
+  </p>
+</footer>
+
+
+</body>
+
+</html>

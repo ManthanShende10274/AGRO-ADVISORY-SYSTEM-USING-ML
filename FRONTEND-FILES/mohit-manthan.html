@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>M&M Team</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f0f4f8; color: #1f2937; }
+
+    /* Header */
+    header { background-color: #074707; color: #edf3ed; padding: 25px 0; text-align: center; }
+    header h1 { font-size: 3rem; font-weight: 700; }
+    header p { font-size: 1.25rem; color: #e9ec5d; }
+
+    /* Sections */
+    .section { padding: 40px 20px; max-width: 1100px; margin: auto; }
+    .about { text-align: center; }
+    .about p { font-size: 1.1rem; max-width: 800px; margin: 15px auto; }
+
+    /* Team profiles */
+    .team-grid { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .team-member { text-align: center; cursor: pointer; transition: transform 0.3s; }
+    .team-member img {
+      width: 180px; height: 180px; object-fit: cover;
+      border-radius: 50%; border: 4px solid #3498db;
+      transition: transform 0.3s;
+    }
+    .team-member:hover { transform: scale(1.05); }
+    .team-member p { margin-top: 10px; font-weight: bold; font-size: 1.1rem; color: #2c3e50; }
+
+    /* Modal */
+    .modal {
+      display: none; position: fixed; top:0; left:0;
+      width:100%; height:100%; background-color: rgba(0,0,0,0.9);
+      justify-content: center; align-items: center; z-index:1000;
+    }
+    .modal-content {
+      display: flex; /* left-right layout */
+      flex-direction: row;
+      background: #fff; padding: 30px; border-radius: 18px;
+      max-width: 900px; width: 90%; align-items: flex-start;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: fadeIn 0.4s ease;
+      gap: 30px;
+    }
+    .modal-content img.profile-full {
+      width: 250px; height: 250px; object-fit: cover;
+      border-radius: 12px; flex-shrink: 0;
+    }
+    .modal-content .modal-text { text-align: left; flex: 1; }
+    .modal-content h2 { font-size: 1.8rem; color:#2c3e50; margin-bottom: 10px; }
+    .modal-content h3 { margin-top: 15px; color:#006400; font-size:1.3rem; }
+    .modal-content ul { list-style: disc; padding-left: 20px; margin-top: 10px; }
+    .close {
+      position:absolute; top:20px; right:30px; font-size:2rem;
+      color:white; cursor:pointer; font-weight:bold;
+    }
+    @keyframes fadeIn { from{opacity:0; transform:scale(0.95);} to{opacity:1; transform:scale(1);} }
+
+    /* Vision & Projects */
+    .vision, .projects { margin-top: 60px; text-align: center; }
+    .vision h2, .projects h2 { color: #006400; font-size: 2rem; margin-bottom: 10px; }
+    .vision p, .projects p { font-size: 1.1rem; line-height: 1.7; max-width: 850px; margin: auto; }
+
+    .footer { background:#111827; color:#9ca3af; text-align:center; padding:20px 10px; margin-top:60px; }
+    .footer a { color:#10b981; text-decoration:none; }
+    
+
+    /* Sticky header */
+    #main-header { position: fixed; top: 0; left: 0; width: 100%; background:#2e7eee; padding:20px 40px; z-index:999; transition: all 0.3s; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+    #main-header.shrink { padding: 10px 20px; }
+    #main-header.shrink h1 { font-size: 18px; }
+    #main-header.shrink p { font-size: 12px; }
+    .spacer { height:100px; }
+  </style>
+</head>
+<body>
+  <header id="main-header">
+    <div class="header-content">
+      <h1>M&M TEAM</h1>
+      <p>Creating Tools that Matter 🚀</p>
+    </div>
+  </header>
+  <div class="spacer"></div>
+
+  <section class="section about">
+    <h2>About Us</h2>
+    <p>
+      We are <b>Mohit</b>, <b>Manthan</b>, <b>Uday</b>, and <b>Neha</b>, engineering students passionate about creating real-world impact using technology.
+      From face recognition systems and machine learning models to placement dashboards and rural tech portals, we build solutions that matter.
+    </p>
+  </section>
+
+  <section class="section team">
+    <h2 style="text-align:center; margin-bottom:2rem;"><i class="fas fa-users" style="color:#2980b9;"></i> Meet the Developers</h2>
+    <div class="team-grid">
+      <div class="team-member" onclick="openModal('mohitModal')">
+        <img src="assets/mohit.jpg" alt="Mohit"><p>Mohit Rangari</p>
+      </div>
+      <div class="team-member" onclick="openModal('manthanModal')">
+        <img src="assets/manthan.jpg" alt="Manthan"><p>Manthan Shende</p>
+      </div>
+      <div class="team-member" onclick="openModal('udayModal')">
+        <img src="assets/uday.jpg" alt="Uday"><p>Uday Sidam</p>
+      </div>
+      <div class="team-member" onclick="openModal('nehaModal')">
+        <img src="assets/neha.jpg" alt="Neha"><p>Neha Chourpagar</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Member Modals -->
+  <div id="mohitModal" class="modal">
+  <span class="close" onclick="closeModal('mohitModal')">&times;</span>
+  <div class="modal-content">
+    <img src="assets/mohit.jpg" alt="Mohit" class="profile-full">
+    <div class="modal-text">
+      <h2>Mohit Rangari</h2>
+      
+      <h3>Responsibilities</h3>
+      <ul>
+        <li>Build Fertilizer Recommendation Module (rule-based or ML-based)</li>
+        <li>Design frontend UI for disease detection, fertilizer input, and results</li>
+        <li>Integrate all modules: ML model, fertilizer module, weather API</li>
+        <li>Test end-to-end functionality</li>
+      </ul>
+
+      <h3>Deliverables</h3>
+      <ul>
+        <li>Fully integrated frontend & backend demo</li>
+        <li>Working recommendation system connected with UI</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+  <div id="manthanModal" class="modal">
+  <span class="close" onclick="closeModal('manthanModal')">&times;</span>
+  <div class="modal-content">
+    <img src="assets/manthan.jpg" alt="Manthan" class="profile-full">
+    <div class="modal-text">
+      <h2>Manthan Shende</h2>
+      
+      <h3>Responsibilities</h3>
+      <ul>
+        <li>Conceptualize overall system architecture (frontend, backend, ML models, database)</li>
+        <li>Build Crop Disease Detection ML model (CNN)</li>
+        <li>Train, evaluate, and save the model for deployment</li>
+        <li>Prepare technical documentation for the ML module</li>
+      </ul>
+
+      <h3>Deliverables</h3>
+      <ul>
+        <li>Trained ML model files (.h5)</li>
+        <li>Model performance report (accuracy, confusion matrix)</li>
+        <li>ML module API ready for integration</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+  <div id="udayModal" class="modal">
+  <span class="close" onclick="closeModal('udayModal')">&times;</span>
+  <div class="modal-content">
+    <img src="assets/uday.jpg" alt="Uday" class="profile-full">
+    <div class="modal-text">
+      <h2>Uday Sidam</h2>
+      
+      <h3>Responsibilities</h3>
+      <ul>
+        <li>Develop backend using Flask/FastAPI</li>
+        <li>Create API endpoints for disease prediction, fertilizer recommendation, and weather updates</li>
+        <li>Integrate real-time weather API</li>
+        <li>Ensure data validation, error handling, and smooth API responses</li>
+      </ul>
+
+      <h3>Deliverables</h3>
+      <ul>
+        <li>Fully functional backend with documented API endpoints</li>
+        <li>Real-time weather update feature integrated with system</li>
+        <li>Backend ready for frontend integration</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+  <div id="nehaModal" class="modal">
+  <span class="close" onclick="closeModal('nehaModal')">&times;</span>
+  <div class="modal-content">
+    <img src="assets/neha.jpg" alt="Neha" class="profile-full">
+    <div class="modal-text">
+      <h2>Neha Chourpagar</h2>
+      
+      <h3>Responsibilities</h3>
+      <ul>
+        <li>Collect and preprocess datasets (crop disease images, soil & fertilizer data, weather data)</li>
+        <li>Ensure data quality and fairness for ML models</li>
+        <li>Prepare project reports, technical documentation, and user manuals</li>
+        <li>Support testing of data-driven modules and model outputs</li>
+      </ul>
+
+      <h3>Deliverables</h3>
+      <ul>
+        <li>Clean and processed datasets ready for training</li>
+        <li>Complete technical and user documentation</li>
+        <li>Reports: synopsis, literature review, and final project report</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Global Vision -->
+  <section class="section vision">
+    <h2><i class="fas fa-bullseye" style="color:#e74c3c;"></i> Our Vision</h2>
+    <p>
+      We believe in using the power of technology to uplift communities, solve real-world problems, and create meaningful digital experiences.
+      As students and developers, our mission is to keep learning, keep building, and create tools that serve people across rural and urban India.
+    </p>
+  </section>
+
+  <!-- Global Featured Project -->
+  <section class="section projects">
+    <h2><i class="fas fa-seedling" style="color:#27ae60;"></i> Featured Project</h2>
+    <p>
+      Agro Advisory System using ML — a futuristic smart farming tool built with Machine Learning and Flask.
+      This system detects crop diseases from images and provides real-time, weather-based farming advice tailored for Indian farmers.
+      Designed with a user-first approach and rooted in real-world needs, it empowers the backbone of our country — the farmers.
+    </p>
+  </section>
+
+
+  <footer class="footer">
+    &copy; 2025 <a href="#">M&M Team</a> | Powered by Mohit, Manthan, Uday & Neha 🚀
+  </footer>
+
+  <script>
+    function openModal(id) { document.getElementById(id).style.display = "flex"; }
+    function closeModal(id) { document.getElementById(id).style.display = "none"; }
+    window.onclick = function(event) {
+      document.querySelectorAll('.modal').forEach(m => {
+        if (event.target == m) m.style.display = "none";
+      });
+    }
+    window.addEventListener('scroll', function () {
+      const header = document.getElementById('main-header');
+      if (window.scrollY > 50) header.classList.add('shrink');
+      else header.classList.remove('shrink');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crop Disease Detection</title>
+  <link rel="icon" href="static/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: #f0f4f8;
+      color: #333;
+      padding-top: 90px; /* offset for fixed header */
+    }
+
+    /* Header styles same as index.html */
+    header {
+      background: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .logo-title {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    header img {
+      height: 50px;
+      border-radius: 8px;
+    }
+
+    .logo-title h1 {
+      font-size: 20px;
+      color: #2E7D32;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #2E7D32;
+    }
+
+    /* Main content styles */
+    .container {
+      width: 70%;
+      max-width: 1000px;
+      height: 75vh;
+      background: #fff;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      overflow: hidden;
+      display: flex;
+      margin: 0 auto;
+      margin-top: 40px;
+      animation: slideIn 0.8s ease-out;
+    }
+
+    @keyframes slideIn {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .left {
+      flex: 1;
+      background: url("assets/cropdetect.jpg") center center/cover no-repeat;
+    }
+
+    .right {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+
+    p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    .upload-box {
+      border: 2px dashed #6c63ff;
+      background-color: #f5f5ff;
+      border-radius: 15px;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      transition: 0.3s ease;
+    }
+
+    .upload-box:hover {
+      background-color: #ecebff;
+      transform: translateY(-3px);
+    }
+
+    .upload-box input[type="file"] {
+      display: none;
+    }
+
+    .upload-box label {
+      display: inline-block;
+      padding: 14px 30px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      background-color: #6c63ff;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .upload-box label:hover {
+      background-color: #4b45cc;
+    }
+
+    .file-name {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #2c3e50;
+      font-weight: 500;
+    }
+
+    .btn-detect {
+      padding: 14px 28px;
+      background-color: #27ae60;
+      border: none;
+      color: #fff;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .btn-detect:hover {
+      background-color: #219150;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .left {
+        height: 250px;
+      }
+
+      .right {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Fixed Header (same as index.html) -->
+  <header>
+    <div class="logo-title">
+      <img src="assets/logo.jpg" alt="Logo">
+      <h1>Agro Advisory System</h1>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="crop.html">Crop Disease</a>
+      <a href="fertilizer.html">Fertilizer</a>
+      <a href="weather.html">Weather</a>
+    </nav>
+  </header>
+
+<!-- Page Content -->
+<div class="container">
+  <div class="left"></div>
+  <div class="right">
+    <h2>Crop Disease Detection</h2>
+    <p>Upload a photo of your crop leaf to detect disease and get the solution instantly.</p>
+
+    <div>
+      <div class="upload-box">
+        <label for="fileInput">Choose Crop Image</label>
+        <input type="file" id="fileInput" name="file" onchange="updateFileName()" required />
+        <div class="file-name" id="fileName">No file chosen</div>
+      </div>
+      <button class="btn-detect" onclick="submitImage()">Detect Disease</button>
+
+      <!-- Spinner -->
+      <div class="spinner" id="spinner" style="display: none;"></div>
+
+      <!-- Prediction Results -->
+      <div id="resultBox" class="result-box"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Alert -->
+<div id="toast" class="toast"></div>
+
+<!-- Styles -->
+<style>
+  .upload-box {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+
+  .upload-box input[type="file"] {
+    display: none;
+  }
+
+  .upload-box label {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .file-name {
+    margin-top: 10px;
+    color: #333;
+    font-size: 14px;
+  }
+
+  .btn-detect {
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+
+  .btn-detect:hover {
+    background-color: #219150;
+  }
+
+  .result-box {
+    background-color: #ecf0f1;
+    padding: 15px;
+    margin-top: 20px;
+    border-left: 4px solid #2ecc71;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #2c3e50;
+    display: none;
+    max-width: 350px;
+  }
+
+  .spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    animation: spin 1s linear infinite;
+    margin-top: 15px;
+    display: block;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .toast {
+    visibility: hidden;
+    min-width: 220px;
+    margin-left: -110px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 12px;
+    position: fixed;
+    z-index: 999;
+    left: 50%;
+    bottom: 30px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.5s ease, bottom 0.5s ease;
+  }
+
+  .toast.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 40px;
+  }
+</style>
+
+<!-- Script -->
+<script>
+  function updateFileName() {
+    const input = document.getElementById('fileInput');
+    const fileName = document.getElementById('fileName');
+    fileName.textContent = input.files[0]?.name || "No file chosen";
+  }
+
+  function showToast(message, color = "#333") {
+    const toast = document.getElementById("toast");
+    toast.style.backgroundColor = color;
+    toast.textContent = message;
+    toast.className = "toast show";
+    setTimeout(() => {
+      toast.className = toast.className.replace("show", "");
+    }, 3000);
+  }
+
+  async function submitImage() {
+    const input = document.getElementById('fileInput');
+    const resultBox = document.getElementById('resultBox');
+    const spinner = document.getElementById('spinner');
+
+    if (!input.files.length) {
+      showToast("❌ Please select an image", "#e74c3c");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", input.files[0]);
+
+    resultBox.style.display = "none";
+    spinner.style.display = "block";
+
+    try {
+      const response = await fetch("http://localhost:5000/predict", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+      spinner.style.display = "none";
+
+      if (data.error) {
+        showToast("❌ " + data.error, "#e74c3c");
+      } else {
+        resultBox.innerHTML = `
+          <strong>🌿 Disease:</strong> ${data.prediction}<br>
+          <strong>📊 Confidence:</strong> ${(data.confidence * 100).toFixed(2)}%<br>
+          <strong>💡 Solution:</strong> ${data.remedy || "Please consult local agronomist."}
+        `;
+        resultBox.style.display = "block";
+        showToast("Disease Predicted ✅", "#27ae60");
+      }
+    } catch (err) {
+      spinner.style.display = "none";
+      showToast("❌ Server error. Try again.", "#e74c3c");
+      console.error(err);
+    }
+  }
+</script>
+
+
+
+
+</body>
+</html>
