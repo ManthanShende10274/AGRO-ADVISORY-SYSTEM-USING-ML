@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fertilizer Recommendation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: #f0f4f8;
+      color: #333;
+      padding-top: 90px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    header {
+      background: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .logo-title {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    header img {
+      height: 50px;
+      border-radius: 8px;
+    }
+
+    .logo-title h1 {
+      font-size: 20px;
+      color: #2E7D32;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #2E7D32;
+    }
+
+    .container {
+      background: #ffffff;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border-radius: 16px;
+      display: flex;
+      width: 90%;
+      max-width: 1200px;
+      overflow: hidden;
+      animation: slideIn 0.8s ease-out;
+    }
+
+    @keyframes slideIn {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .left-section {
+      flex: 1;
+      background-image: url('assets/fert.jpg');
+      background-size: cover;
+      background-position: center;
+      min-height: 400px;
+    }
+
+    .right-section {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #1e40af;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    select, button {
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    button {
+      background-color: #1e40af;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #3749c2;
+    }
+
+    .result-box {
+      padding: 15px;
+      background-color: #f0f9ff;
+      border-left: 5px solid #0ea5e9;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 1.5;
+      display: none;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ef4444;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      font-size: 15px;
+      animation: slideToast 0.5s ease;
+      z-index: 10000;
+    }
+
+    @keyframes slideToast {
+      from { transform: translateX(-50%) translateY(20px); opacity: 0; }
+      to   { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+
+    @media(max-width: 768px) {
+      .container {
+        flex-direction: column;
+        margin: 20px;
+      }
+
+      .left-section {
+        min-height: 200px;
+      }
+
+      .right-section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-title">
+      <img src="assets/logo.jpg" alt="Logo" />
+      <h1>Agro Advisory System</h1>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="crop.html">Crop Disease</a>
+      <a href="fertilizer.html">Fertilizer</a>
+      <a href="weather.html">Weather</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="left-section"></div>
+    <div class="right-section">
+      <h2>Fertilizer Recommendation</h2>
+      <label for="soil">Select Soil Type:</label>
+      <select id="soil">
+        <option value="">--Select--</option>
+        <option value="black">Black Soil</option>
+        <option value="red">Red Soil</option>
+        <option value="alluvial">Alluvial Soil</option>
+        <option value="laterite">Laterite Soil</option>
+        <option value="sandy">Sandy Soil</option>
+      </select>
+
+      <label for="crop">Select Crop Type:</label>
+      <select id="crop">
+        <option value="">--Select--</option>
+        <option value="rice">Rice</option>
+        <option value="wheat">Wheat</option>
+        <option value="cotton">Cotton</option>
+        <option value="sugarcane">Sugarcane</option>
+        <option value="soybean">Soybean</option>
+      </select>
+
+      <button onclick="getRecommendation()">Get Recommendation</button>
+      <div class="result-box" id="recommendation"></div>
+    </div>
+  </div>
+
+  <script>
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerText = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    function getRecommendation() {
+      const soil = document.getElementById("soil").value;
+      const crop = document.getElementById("crop").value;
+      const resultBox = document.getElementById("recommendation");
+
+      if (!soil || !crop) {
+        showToast("Please select both soil and crop type.");
+        return;
+      }
+
+      const data = {
+        "black": {
+          "rice": "Use Urea (46% N), DAP (18-46-0), MOP (0-0-60). Organic manure improves water retention.",
+          "wheat": "Use 120 kg/ha of Urea + 60 kg DAP + 40 kg MOP.",
+          "cotton": "Use NPK (20-20-0) basal and apply Potash later.",
+          "sugarcane": "Apply 150 kg Urea + 100 kg DAP + compost.",
+          "soybean": "Rhizobium inoculation + 25 kg N + 50 kg P per hectare."
+        },
+        "red": {
+          "rice": "Add lime to correct pH. Use 60 kg Urea + 40 kg DAP + 40 kg MOP.",
+          "wheat": "DAP and Potash with FYM (Farm Yard Manure).",
+          "cotton": "NPK (12-32-16) + compost.",
+          "sugarcane": "Low nitrogen needed, apply FYM + Potash.",
+          "soybean": "Add gypsum and single super phosphate."
+        },
+        "alluvial": {
+          "rice": "Use Urea (100 kg), DAP (50 kg), MOP (25 kg).",
+          "wheat": "Recommended: 120 kg N, 60 kg P2O5, 40 kg K2O.",
+          "cotton": "Apply balanced NPK: 80-40-40 + organic mulch.",
+          "sugarcane": "Use green manure + 250 kg NPK mixture.",
+          "soybean": "Apply 20:60:40 NPK with micronutrient spray."
+        },
+        "laterite": {
+          "rice": "Heavy rainfall areas. Add lime + 90 kg NPK.",
+          "wheat": "Add lime + organic matter + urea split dose.",
+          "cotton": "Use rock phosphate + bio-fertilizer.",
+          "sugarcane": "Apply compost + lime + 60:40:40 NPK.",
+          "soybean": "Use dolomite, single super phosphate & compost."
+        },
+        "sandy": {
+          "rice": "Use split dose of Urea + compost.",
+          "wheat": "Apply water-soluble fertilizer + FYM.",
+          "cotton": "Low nutrient retention. Apply slow-release NPK.",
+          "sugarcane": "Add bio-fertilizers like Azotobacter + FYM.",
+          "soybean": "Use neem-coated Urea + Super Phosphate."
+        }
+      };
+
+      const result = data[soil][crop] || "No data available for selected inputs.";
+      resultBox.innerHTML = result;
+      resultBox.style.display = "block";
+      resultBox.classList.add('fadeIn');
+    }
+  </script>
+</body>
+</html>
